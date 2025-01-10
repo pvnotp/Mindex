@@ -20,8 +20,9 @@ namespace CodeChallenge.Config
             var builder = WebApplication.CreateBuilder(args);
 
             builder.UseEmployeeDB();
-            
+
             AddServices(builder.Services);
+
 
             var app = builder.Build();
 
@@ -30,6 +31,9 @@ namespace CodeChallenge.Config
             {
                 app.UseDeveloperExceptionPage();
                 SeedEmployeeDB();
+
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseAuthorization();
@@ -46,6 +50,9 @@ namespace CodeChallenge.Config
             services.AddScoped<IEmployeeRepository, EmployeeRespository>();
 
             services.AddControllers();
+
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
         }
 
         private void SeedEmployeeDB()
