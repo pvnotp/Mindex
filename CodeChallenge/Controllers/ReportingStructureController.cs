@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CodeChallenge.Services;
@@ -10,20 +7,20 @@ using CodeChallenge.Models;
 namespace CodeChallenge.Controllers
 {
     [ApiController]
-    [Route("api/reportingStructure")]
+    [Route("api/reportingStructures")]
     public class ReportingStructureController : ControllerBase
     {
         private readonly ILogger _logger;
         private readonly IEmployeeService _employeeService;
 
-        public ReportingStructureController(ILogger<ReportingStructure> logger, IEmployeeService employeeService)
+        public ReportingStructureController(ILogger<ReportingStructureController> logger, IEmployeeService employeeService)
         {
             _logger = logger;
             _employeeService = employeeService;
         }
 
-        [HttpGet("", Name = "getReportStructureById")]
-        public IActionResult GetReportingStructureById([FromQuery] String id)
+        [HttpGet("{id}", Name = "getReportStructureById")]
+        public IActionResult GetReportingStructureById(String id)
         {
             _logger.LogDebug($"Received reporting structure get request for employee id '{id}'.");
 
@@ -42,7 +39,7 @@ namespace CodeChallenge.Controllers
                 _logger.LogDebug($"Could not get reporting structure for employee id '{id}'.");
                 return BadRequest();
             }
-            
+
         }
 
     }

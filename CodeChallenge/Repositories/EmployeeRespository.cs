@@ -30,10 +30,13 @@ namespace CodeChallenge.Repositories
 
         public Employee GetById(string id)
         {
-            /* Enabled eager loading to ensure that direct reports are loaded.
+            /* "Include" enables eager loading to ensure that direct reports are loaded.
              * See: https://learn.microsoft.com/en-us/ef/ef6/querying/related-data
              */
-            return _employeeContext.Employees.Include(e => e.DirectReports).SingleOrDefault(e => e.EmployeeId == id);
+            return _employeeContext.Employees
+                .Include(e => e.DirectReports)
+                .ThenInclude(dr => dr.DirectReports)
+                .SingleOrDefault(e => e.EmployeeId == id);
 
         }
 
